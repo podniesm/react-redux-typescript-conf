@@ -1,0 +1,41 @@
+{
+  "name": "ReactTests",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "podniesm <podniesm@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "test": "karma start"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.1",
+    "@types/mocha": "^2.2.41",
+    "@types/react": "^15.0.38",
+    "@types/react-addons-test-utils": "^0.14.19",
+    "@types/react-dom": "^15.5.1",
+    "@types/sinon": "^2.3.2",
+    "chai": "^4.1.0",
+    "karma": "^1.7.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-debug": "^0.1.2",
+    "karma-mocha-reporter": "^2.2.3",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-sinon": "^1.0.5",
+    "karma-webpack": "^2.0.4",
+    "mocha": "^3.4.2",
+    "phantomjs": "^2.1.7",
+    "react-addons-test-utils": "^15.6.0",
+    "sinon": "^2.3.8",
+    "ts-loader": "^2.3.0",
+    "ts-node": "^3.2.0",
+    "typescript": "^2.4.1",
+    "webpack": "^3.3.0"
+  },
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  }
+}
