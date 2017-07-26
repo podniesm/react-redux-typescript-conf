@@ -68,7 +68,7 @@ module.exports = function(config) {
          * npm module to be npm installed and added to the "plugins" field.
          */
         preprocessors: {
-            "test/**/*.tsx": ["webpack"] // Using karma-webpack npm module
+            "test/**/*.tsx": ["webpack", 'sourcemap'] // Using karma-webpack npm module
         },
 
         /*
@@ -94,6 +94,7 @@ module.exports = function(config) {
          * purposes, you can specify that here.
          */
         webpack: {
+            devtool: 'eval-source-map',
             module: webpackConfig.module,
             resolve: webpackConfig.resolve
         }

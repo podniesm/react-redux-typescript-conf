@@ -1,7 +1,6 @@
 var path = require("path");
 
 var config = {
-    devtool: "eval",
     entry: "./src/app.tsx",
     output: {
         path: path.resolve(__dirname, 'dist'),

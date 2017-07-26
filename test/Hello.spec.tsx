@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import * as chai from "chai";
 import * as TestUtils from "react-addons-test-utils";
 import Hello from "../src/Hello";

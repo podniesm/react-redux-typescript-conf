@@ -5,7 +5,7 @@ interface HelloProps {
 }
 
 class Hello extends React.Component<HelloProps, {}> {
-    render() {
+    render(): JSX.Element {
         return <div>Hello, {this.props.name}</div>;
     }
 }
