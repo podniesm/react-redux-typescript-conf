@@ -7,7 +7,8 @@
     "preserveConstEnums": true,
     "removeComments": true,
     "target": "ES5",
-    "types" : ["react", "mocha", "chai"]
+    "types" : ["react", "mocha", "chai"],
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules"

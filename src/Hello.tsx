@@ -1,13 +1,24 @@
 import * as React from "react";
+import {connect} from "react-redux";
 
-interface HelloProps {
+interface IHelloProps {
     name: string;
 }
 
-class Hello extends React.Component<HelloProps, {}> {
-    render(): JSX.Element {
+interface IHelloState {
+    name: string;
+}
+
+class Hello extends React.Component<IHelloProps, IHelloState> {
+    public render(): JSX.Element {
         return <div>Hello, {this.props.name}</div>;
     }
 }
 
-export default Hello;
+function mapStateToProps(state: any, ownProps: any): IHelloProps {
+    return {
+      name: "piotrek"
+    };
+}
+
+export default connect(mapStateToProps)(Hello);
