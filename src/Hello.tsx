@@ -10,15 +10,22 @@ interface IHelloState {
 }
 
 class Hello extends React.Component<IHelloProps, IHelloState> {
+    constructor(props: IHelloProps) {
+        super(props);
+        this.state = {
+            name: props.name
+        };
+    }
+
     public render(): JSX.Element {
         return <div>Hello, {this.props.name}</div>;
     }
 }
+
+export default connect(mapStateToProps)(Hello);
 
 function mapStateToProps(state: any, ownProps: any): IHelloProps {
     return {
       name: "piotrek"
     };
 }
-
-export default connect(mapStateToProps)(Hello);
