@@ -2,16 +2,16 @@ import * as React from "react";
 import * as chai from "chai";
 import { shallow, mount } from 'enzyme';
 
-import Hello from "../src/Hello";
+import App from "../src/components/App";
 
-describe("Hello", () => {
+describe("App", () => {
     it("test1", () => {
-        const wrapper = shallow(<Hello name="Willson"/>);
+        const wrapper = shallow(<App name="Willson"/>);
         chai.expect(wrapper.find('div')).to.have.length(1);
     });
 
     it("test2", () => {
-        const wrapper = mount(<Hello name="Willson"/>);
+        const wrapper = mount(<App name="Willson"/>);
         chai.expect(wrapper.find('div')).to.have.length(1);
     });
 });

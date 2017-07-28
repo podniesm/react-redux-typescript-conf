@@ -1,7 +1,7 @@
 var path = require("path");
 
 var config = {
-    entry: "./src/app.tsx",
+    entry: "./src/Index.tsx",
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js'
