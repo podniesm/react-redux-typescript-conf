@@ -1,8 +1,18 @@
 import * as React from "react";
-import {connect} from "react-redux";
-import IAppState from "../store/IAppState";
+import {connect, Dispatch} from "react-redux";
+import IAppState from "../store/IStoreState";
+import {quantityActions} from "../actions/quantityActions";
 
-interface IAppProps {
+interface IAppProps extends IAppDataProps, IAppActionProps {
+
+}
+
+interface IAppActionProps {
+    addHandler: () => void;
+    subtractHandler: () => void;
+}
+
+interface IAppDataProps {
     name: string;
 }
 
@@ -15,14 +25,27 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     public render(): JSX.Element {
-        return <div>Hello, {this.props.name} and quantity: {this.state.quantity}</div>;
+        return (
+            <div>
+                <div>Hello, {this.props.name} and quantity: {this.state.quantity}</div>
+                <button onClick={this.props.addHandler}>Add</button>
+                <button onClick={this.props.subtractHandler}>Subtract</button>
+            </div>
+        );
     }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
-function mapStateToProps(state: IAppState, ownProps: any): IAppProps {
+function mapStateToProps(state: IAppState, ownProps: any): IAppDataProps {
     return {
         name: "Pioter"
     };
+}
+
+function mapDispatchToProps(dispatch: Dispatch<number>, ownProps: any): IAppActionProps {
+    return {
+        addHandler: () => dispatch(quantityActions.add(1)),
+        subtractHandler: () => dispatch(quantityActions.subtract(1))
+    }
 }
