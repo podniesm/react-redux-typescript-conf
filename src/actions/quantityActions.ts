@@ -1,7 +1,8 @@
-import {IAction} from "../_core/IAction";
+import {IAction} from '../_core/IAction';
+
 export const quantityActionTypes = {
     ADD: 'ADD_QUANTITY',
-    SUBTRACT: 'SUBTRACT_QUANTITY'
+    SUBTRACT: 'SUBTRACT_QUANTITY',
 };
 
 export interface IQuantityActions {
@@ -12,14 +13,14 @@ export interface IQuantityActions {
 export const quantityActions: IQuantityActions = {
     add(quantity: number): IAction<number> {
         return {
+            payload: quantity,
             type: quantityActionTypes.ADD,
-            payload: quantity
         };
     },
     subtract(quantity: number): IAction<number> {
         return {
+            payload: quantity,
             type: quantityActionTypes.SUBTRACT,
-            payload: quantity
         };
-    }
+    },
 };

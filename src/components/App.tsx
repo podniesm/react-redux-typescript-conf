@@ -1,11 +1,8 @@
-import * as React from "react";
-import {connect, Dispatch} from "react-redux";
-import IAppState from "../store/IStoreState";
-import {quantityActions} from "../actions/quantityActions";
+import * as React from 'react';
+import {connect, Dispatch} from 'react-redux';
+import {quantityActions} from '../actions/quantityActions';
+import IAppState from '../store/IStoreState';
 
-interface IAppProps extends IAppDataProps, IAppActionProps {
-
-}
 
 interface IAppActionProps {
     addHandler: () => void;
@@ -16,11 +13,13 @@ interface IAppDataProps {
     name: string;
 }
 
+interface IAppProps extends IAppDataProps, IAppActionProps {}
+
 class App extends React.Component<IAppProps, IAppState> {
     constructor(props: IAppProps) {
         super(props);
         this.state = {
-          quantity: 0
+          quantity: 0,
         };
     }
 
@@ -39,13 +38,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 function mapStateToProps(state: IAppState, ownProps: any): IAppDataProps {
     return {
-        name: "Pioter"
+        name: 'Pioter',
     };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<number>, ownProps: any): IAppActionProps {
     return {
         addHandler: () => dispatch(quantityActions.add(1)),
-        subtractHandler: () => dispatch(quantityActions.subtract(1))
-    }
+        subtractHandler: () => dispatch(quantityActions.subtract(1)),
+    };
 }
