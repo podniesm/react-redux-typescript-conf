@@ -11,6 +11,7 @@ interface IAppActionProps {
 
 interface IAppDataProps {
     name: string;
+    quantity: number;
 }
 
 interface IAppProps extends IAppDataProps, IAppActionProps {}
@@ -26,7 +27,7 @@ class App extends React.Component<IAppProps, IAppState> {
     public render(): JSX.Element {
         return (
             <div>
-                <div>Hello, {this.props.name} and quantity: {this.state.quantity}</div>
+                <div>Hello, {this.props.name} and quantity: {this.props.quantity}</div>
                 <button onClick={this.props.addHandler}>Add</button>
                 <button onClick={this.props.subtractHandler}>Subtract</button>
             </div>
@@ -36,9 +37,10 @@ class App extends React.Component<IAppProps, IAppState> {
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
-function mapStateToProps(state: IAppState, ownProps: any): IAppDataProps {
+function mapStateToProps(state: IAppState, ownProps: IAppDataProps): IAppDataProps {
     return {
-        name: 'Pioter',
+        name: ownProps.name,
+        quantity: state.quantity,
     };
 }
 

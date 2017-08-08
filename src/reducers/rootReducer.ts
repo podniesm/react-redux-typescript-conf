@@ -3,7 +3,7 @@ import IAppState from "../store/IStoreState";
 import quantity from "./quantityReducer";
 
 const rootReducer = combineReducers<IAppState>({
-    quantity
+    quantity,
 });
 
 export default rootReducer;

@@ -1,7 +1,7 @@
-import {IAction, IEvent} from "../_core/IAction";
-import {quantityActionTypes} from "../actions/quantityActions";
+import {IAction, IEvent} from '../_core/IAction';
+import {quantityActionTypes} from '../actions/quantityActions';
 
-export default function quantityReducer(state: number = 0, action:IEvent): number {
+export default function quantityReducer(state: number = 0, action: IEvent): number {
     switch (action.type) {
         case quantityActionTypes.ADD:
             return state + (action as IAction<number>).payload;
