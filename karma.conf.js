@@ -96,7 +96,13 @@ module.exports = function(config) {
         webpack: {
             devtool: 'eval-source-map',
             module: webpackConfig.module,
-            resolve: webpackConfig.resolve
+            resolve: webpackConfig.resolve,
+            externals: {
+                'react/lib/ExecutionEnvironment': true,
+                'react/addons': true,
+                'react-addons-test-utils': true,
+                'react/lib/ReactContext': 'window'
+            }
         }
     });
 };
