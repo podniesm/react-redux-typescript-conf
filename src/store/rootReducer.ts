@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
-import IAppState from '../store/IStoreState';
-import quantity from './quantityReducer';
+import IAppState from './IStoreState';
+import quantity from '../temp/quantityReducer';
 
 const rootReducer = combineReducers<IAppState>({
     quantity,

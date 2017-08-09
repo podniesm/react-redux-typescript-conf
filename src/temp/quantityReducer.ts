@@ -1,5 +1,5 @@
 import {IAction, IEvent} from '../_core/IAction';
-import {quantityActionTypes} from '../actions/quantityActions';
+import {quantityActionTypes} from './quantityActions';
 
 export default function quantityReducer(state: number = 0, action: IEvent): number {
     switch (action.type) {

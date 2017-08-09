@@ -2,7 +2,7 @@ import * as chai from 'chai';
 import { mount, shallow } from 'enzyme';
 import * as React from 'react';
 
-import App from '../src/components/App';
+import App from '../src/temp/App';
 
 describe('App', () => {
     it('test1', () => {

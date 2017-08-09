@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import AppContainer from './components/AppContainer';
+import AppContainer from './temp/AppContainer';
 import configureStore from './store/configureStore';
 
 const store = configureStore();
