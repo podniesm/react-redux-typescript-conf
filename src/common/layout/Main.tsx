@@ -4,6 +4,7 @@ import {
     Link,
     Route,
 } from 'react-router-dom';
+import Auth from '../../_core/Auth';
 import IMenuItemData from '../menu/IMenuItemData';
 import Menu from '../menu/Menu';
 import MenuItem from '../menu/MenuItem';
@@ -24,6 +25,18 @@ class Main extends React.Component<any, any> {
         return (
             <Router>
                 <div>
+                    <Auth
+                        permissions={['one', 'two', 'three', 'four']}
+                        requiredPermissions={['one', 'two', 'three', 'four']}
+                    >
+                        <div>ACCESS</div>
+                    </Auth>
+                    <Auth
+                        permissions={['one', 'tw', 'three', 'four']}
+                        requiredPermissions={['one', 'two', 'three', 'four']}
+                    >
+                        <div>DENY</div>
+                    </Auth>
                     <Menu title='AZA BOK'>
                         <ul>
                             {createMenuItems(menuItemsData)}
