@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {
-    BrowserRouter as Router,
     Link,
     Route,
 } from 'react-router-dom';
-import Auth from '../../_core/Auth';
+import AuthRoute from '../../_core/security/AuthRoute';
+import AuthSection from '../../_core/security/AuthSection';
+import User from '../../_core/security/User';
 import IMenuItemData from '../menu/IMenuItemData';
 import Menu from '../menu/Menu';
 import MenuItem from '../menu/MenuItem';
@@ -14,41 +15,38 @@ const menuItemsData: IMenuItemData[] = [
     {name: 'ZADANIA', path: 'zadania'},
 ];
 
-function createMenuItems(menuItems: IMenuItemData[]): JSX.Element[] {
-    return menuItems.map((menuItemData, index) => (
-        <MenuItem key={index} url={menuItemData.path}>{menuItemData.name}</MenuItem>
-    ));
-}
+const user = new User('Michal', ['one', 'two']);
 
 class Main extends React.Component<any, any> {
     public render(): JSX.Element {
         return (
-            <Router>
-                <div>
-                    <Auth
-                        permissions={['one', 'two', 'three', 'four']}
-                        requiredPermissions={['one', 'two', 'three', 'four']}
-                    >
-                        <div>ACCESS</div>
-                    </Auth>
-                    <Auth
-                        permissions={['one', 'tw', 'three', 'four']}
-                        requiredPermissions={['one', 'two', 'three', 'four']}
-                    >
-                        <div>DENY</div>
-                    </Auth>
-                    <Menu title='AZA BOK'>
-                        <ul>
-                            {createMenuItems(menuItemsData)}
-                        </ul>
-                    </Menu>
-                    <Route exact={true} path='/' component={() => <div>home!</div>}/>
-                    <Route path='/dashboard' component={() => <div>dashboard!</div>}/>
-                    <Route path='/zadania' component={() => <div>zadania!</div>}/>
-                </div>
-            </Router>
+            <div>
+                <AuthSection permissions={['one', 'two']} user={user}>
+                    <div>ACCESS</div>
+                </AuthSection>
+                <AuthSection permissions={['one', 'two', 'tt']} user={user}>
+                    <div>DENY</div>
+                </AuthSection>
+                <Menu title='AZA BOK'>
+                    <ul>{createMenuItems(menuItemsData)}</ul>
+                </Menu>
+                <Route exact={true} path='/' component={() => <div>home!</div>}/>
+                <AuthRoute
+                    path='/dashboard'
+                    component={() => <div>dashboard!</div>}
+                    user={user}
+                    permissions={['one1']}
+                />
+                <Route path='/zadania' component={() => <div>zadania!</div>}/>
+            </div>
         );
     }
+}
+
+function createMenuItems(menuItems: IMenuItemData[]): JSX.Element[] {
+    return menuItems.map((menuItemData, index) => (
+        <MenuItem key={index} url={menuItemData.path}>{menuItemData.name}</MenuItem>
+    ));
 }
 
 export default Main;

@@ -4,6 +4,7 @@
     // enable tslint-react rules here
     "jsx-self-close": true,
     "quotemark": [true, "single", "avoid-escape"],
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "variable-name": ["allow-leading-underscore"]
   }
 }
