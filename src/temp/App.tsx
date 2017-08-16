@@ -23,6 +23,7 @@ class App extends React.Component<IAppProps, IAppState> {
 
     public render(): JSX.Element {
         return (
+            // comment
             <div>
                 <div>Hello, {this.props.name} and quantity: {this.props.quantity}</div>
                 <button onClick={this.props.addHandler}>Add</button>
