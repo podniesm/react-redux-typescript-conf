@@ -6,6 +6,7 @@ import {
 import AuthRoute from '../../_core/security/AuthRoute';
 import AuthSection from '../../_core/security/AuthSection';
 import User from '../../_core/security/User';
+import Tasks from '../../tasks/Tasks';
 import IMenuItemData from '../menu/IMenuItemData';
 import Menu from '../menu/Menu';
 import MenuItem from '../menu/MenuItem';
@@ -37,7 +38,12 @@ class Main extends React.Component<any, any> {
                     user={user}
                     permissions={['one1']}
                 />
-                <Route path='/zadania' component={() => <div>zadania!</div>}/>
+                <AuthRoute
+                    path='/zadania'
+                    component={Tasks}
+                    user={user}
+                    permissions={['one']}
+                />
             </div>
         );
     }
