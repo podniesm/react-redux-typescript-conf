@@ -12,22 +12,15 @@ export interface IAuthRouteProps extends RouteProps {
 }
 
 const authRoute: React.StatelessComponent<IAuthRouteProps> = ({component, ...rest}): JSX.Element => {
-    const user = rest.user;
-    return (
-        <Route {...rest} render={(props: RouteProps) => temp(props, user, rest.permissions, component)}/>
-    );
+    return <Route {...rest} render={(props: RouteProps) => renderAuth(props, rest.user, rest.permissions, component)}/>;
 };
 
-function temp(props: RouteProps, user: User, permissions: string[], component: any): JSX.Element {
+function renderAuth(props: RouteProps, user: User, permissions: string[], component: any): JSX.Element {
     if (!user) {
-        return (
-            <Redirect to={{pathname: '/login', state: { from: props.location }}}/>
-        );
+        return <Redirect to={{pathname: '/login', state: { from: props.location }}}/>;
     }
     if (!user.authorize(permissions)) {
-        return (
-            <Redirect to={{pathname: '/nopermission', state: { from: props.location }}}/>
-        );
+        return <Redirect to={{pathname: '/nopermission', state: { from: props.location }}}/>;
     }
     return React.createElement(component, props);
 }

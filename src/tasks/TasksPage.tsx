@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-class Tasks extends React.Component<any, any> {
+class TasksPage extends React.Component<any, any> {
     public render(): JSX.Element {
         return (
             <div>zadania!</div>
@@ -8,4 +8,4 @@ class Tasks extends React.Component<any, any> {
     }
 }
 
-export default Tasks;
+export default TasksPage;
