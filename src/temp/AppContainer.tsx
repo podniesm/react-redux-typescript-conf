@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {connect, Dispatch} from 'react-redux';
-import {quantityActions} from './quantityActions';
 import IAppState from '../store/IStoreState';
 import App, {IAppActionProps, IAppDataProps} from './App';
+import {quantityActions} from './quantityActions';
 
 function mapStateToProps(state: IAppState, ownProps: IAppDataProps): IAppDataProps {
     return {

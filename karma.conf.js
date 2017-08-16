@@ -2,7 +2,7 @@
  * More detailed explanation here: http://karma-runner.github.io/0.13/config/configuration-file.html
  */
 
-var webpackConfig = require("./webpack.config");
+var webpackConfig = require("./webpack.config.test");
 
 module.exports = function(config) {
     config.set({
@@ -68,7 +68,9 @@ module.exports = function(config) {
          * npm module to be npm installed and added to the "plugins" field.
          */
         preprocessors: {
-            "test/**/*.tsx": ["webpack", 'sourcemap'] // Using karma-webpack npm module
+            "src/**/*.tsx": ["webpack", 'sourcemap', 'coverage'],
+            "src/**/*.ts": ["webpack", 'sourcemap', 'coverage'],
+            "test/**/*.tsx": ["webpack", 'sourcemap'],
         },
 
         /*
@@ -76,7 +78,12 @@ module.exports = function(config) {
          * use the karma-mocha-reporter, you must npm install the module and
          * include it in the list of plugins.
          */
-        reporters: ["mocha"],
+        reporters: ["mocha", 'coverage'],
+
+        coverageReporter: {
+            type : 'html',
+            dir : 'coverage/'
+        },
 
         /*
          * If true, Karma will start and capture all configured browsers, run

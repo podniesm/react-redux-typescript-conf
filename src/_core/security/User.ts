@@ -26,7 +26,7 @@ class User {
     private hasPermission(requiredPermission: string): boolean {
         let hasPermission = false;
         for (const permission of this._permissions) {
-            hasPermission = hasPermission || permission === requiredPermission;
+            hasPermission = hasPermission || permission === requiredPermission || !permission;
             if (hasPermission) {
                 return true;
             }
