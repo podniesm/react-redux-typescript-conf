@@ -4,7 +4,7 @@ class User {
 
     constructor(name: string, permissions: string[]) {
         this._name = name;
-        this._permissions = permissions;
+        this._permissions = permissions || [];
     }
 
     get name(): string {
@@ -15,22 +15,23 @@ class User {
         if (!requiredPermissions) {
             return true;
         }
-
         for (const requiredPermission of requiredPermissions) {
-            let hasPermission = false;
-
-            for (const permission of this._permissions) {
-                hasPermission = hasPermission || permission === requiredPermission;
-                if (hasPermission) {
-                    break;
-                }
-            }
-
-            if (!hasPermission) {
+            if (!this.hasPermission(requiredPermission)) {
                 return false;
             }
         }
         return true;
+    }
+
+    private hasPermission(requiredPermission: string): boolean {
+        let hasPermission = false;
+        for (const permission of this._permissions) {
+            hasPermission = hasPermission || permission === requiredPermission;
+            if (hasPermission) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
