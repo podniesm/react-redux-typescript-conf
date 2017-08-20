@@ -7,7 +7,8 @@ var config = {
     entry: [
         'eventsource-polyfill',
         'webpack-hot-middleware/client?reload=true',
-        "./src/Index.tsx"],
+        './src/mock/tasksMock.ts',
+        './src/Index.tsx'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',

@@ -13,7 +13,7 @@ export interface IAppDataProps {
 
 export interface IAppProps extends IAppDataProps, IAppActionProps {}
 
-class App extends React.Component<IAppProps, IAppState> {
+class App extends React.Component<IAppProps, Partial<IAppState>> {
     constructor(props: IAppProps) {
         super(props);
         this.state = {
@@ -23,7 +23,6 @@ class App extends React.Component<IAppProps, IAppState> {
 
     public render(): JSX.Element {
         return (
-            // comment
             <div>
                 <div>Hello, {this.props.name} and quantity: {this.props.quantity}</div>
                 <button onClick={this.props.addHandler}>Add</button>

@@ -1,37 +1,24 @@
-import FilterData from '../_core/grids/FilterData';
+import _ = require('lodash');
 import {IAction, IEvent} from '../_core/IAction';
+import initialState from '../store/initialState';
 import Task from './Task';
 import {tasksActionTypes} from './tasksActions';
 
-export default function tasksReducer(state: Task[] = [], event: IEvent): Task[] {
+export interface ITasksState {
+    items: Task[];
+    isLoading: boolean;
+}
+
+export default function tasksReducer(state: ITasksState = initialState.tasks, event: IEvent): ITasksState {
     switch (event.type) {
-        case tasksActionTypes.ADD:
-            return addHandler(event as IAction<Task>);
-        case tasksActionTypes.REMOVE:
-            return removeHandler(event as IAction<string>);
-        case tasksActionTypes.FILTER:
-            return filterHandler(event as IAction<FilterData>);
+        case tasksActionTypes.LOAD_TASKS_STARTED:
+            return _.assign<{}, ITasksState, Partial<ITasksState>>({}, state, {isLoading: true});
+        case tasksActionTypes.LOAD_TASKS_SUCCESS:
+            const tasks = (event as IAction<Task[]>).payload;
+            return _.assign<{}, ITasksState, Partial<ITasksState>>({}, state, {isLoading: false, items: tasks});
+        case tasksActionTypes.LOAD_TASKS_FAILURE:
+            return _.assign<{}, ITasksState, Partial<ITasksState>>({}, state, {isLoading: false, items: []});
         default:
             return state;
     }
-
-    function addHandler(action: IAction<Task>): Task[] {
-        const task = action.payload;
-        return [...state, task];
-    }
-
-    function removeHandler(action: IAction<string>): Task[] {
-        const removingTaskId = action.payload;
-        return state.map((t) => {
-            if (t.id !== removingTaskId) {
-                return t;
-            }
-        });
-    }
-
-    function filterHandler(action: IAction<FilterData>): Task[] {
-        const filterData = action.payload;
-        return state;
-    }
-
 }

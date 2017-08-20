@@ -1,36 +1,62 @@
-import FilterData from '../_core/grids/FilterData';
-import {IAction} from '../_core/IAction';
+import 'isomorphic-fetch';
+import {Dispatch} from 'react-redux';
+import {IAction, IEvent} from '../_core/IAction';
 import Task from './Task';
 
 export const tasksActionTypes = {
-    ADD: 'ADD_TASK',
-    FILTER: 'FILTER',
-    REMOVE: 'REMOVE_TASK',
+    LOAD_TASKS_FAILURE: 'LOAD_TASKS_FAILURE',
+    LOAD_TASKS_STARTED: 'LOAD_TASKS_STARTED',
+    LOAD_TASKS_SUCCESS: 'LOAD_TASKS_SUCCESS',
+    TEMP: 'TEMP',
 };
 
 export interface ITasksActions {
-    add(task: Task): IAction<Task>;
-    remove(taskId: number): IAction<number>;
-    filter(filterData: FilterData): IAction<FilterData>;
+    load(): any;
+    temp(): any;
 }
 
 export const tasksActions: ITasksActions = {
-    add(task: Task): IAction<Task> {
-        return {
-            payload: task,
-            type: tasksActionTypes.ADD,
+    load(): any {
+        return (dispatch: Dispatch<any>): void => {
+            dispatch(loadStarted());
+            fetch('/items')
+                .then((response: Response) => response.json())
+                .then((tasks: Task[]) => {
+                    dispatch(loadSuccess(tasks));
+                })
+                .catch((error: Error) => {
+                    dispatch(loadFailure());
+                });
         };
     },
-    remove(taskId: number): IAction<number> {
-        return {
-            payload: taskId,
-            type: tasksActionTypes.REMOVE,
-        };
-    },
-    filter(filterData: FilterData): IAction<FilterData> {
-        return {
-            payload: filterData,
-            type: tasksActionTypes.FILTER,
+    temp(): any {
+        return (dispatch: Dispatch<any>): void => {
+            dispatch(loadStarted());
+            fetch('/temp')
+                .then((response: Response) => response.text())
+                .then((t) => console.log(t))
+                .catch((error: Error) => {
+                    dispatch(loadFailure());
+                });
         };
     },
 };
+
+function loadStarted(): IEvent {
+    return {
+        type: tasksActionTypes.LOAD_TASKS_STARTED,
+    };
+}
+
+function loadSuccess(tasks: Task[]): IAction<Task[]> {
+    return {
+        payload: tasks,
+        type: tasksActionTypes.LOAD_TASKS_SUCCESS,
+    };
+}
+
+function loadFailure(): IEvent {
+    return {
+        type: tasksActionTypes.LOAD_TASKS_FAILURE,
+    };
+}

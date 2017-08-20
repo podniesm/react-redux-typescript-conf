@@ -2,29 +2,28 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {
-    BrowserRouter as Router,
     Link,
     Route,
 } from 'react-router-dom';
 import Main from './common/layout/Main';
 import configureStore from './store/configureStore';
+import initialState from './store/initialState';
+import {tasksActions} from './tasks/tasksActions';
 import AppContainer from './temp/AppContainer';
 
-const store = configureStore();
-
-// ReactDOM.render(
-//     <Provider store={store}>
-//         <AppContainer
-//             name='Willson'
-//             quantity={0}
-//         />
-//     </Provider>,
-//     document.getElementById('root'),
-// );
+const store = configureStore(initialState);
+store.dispatch(tasksActions.load());
 
 ReactDOM.render(
-    <Router>
+    <Provider store={store}>
         <Main/>
-    </Router>,
+    </Provider>,
     document.getElementById('root'),
 );
+
+// ReactDOM.render(
+//     <Router>
+//         <Main/>
+//     </Router>,
+//     document.getElementById('root'),
+// );
