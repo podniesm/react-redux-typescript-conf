@@ -7,12 +7,10 @@ export const tasksActionTypes = {
     LOAD_TASKS_FAILURE: 'LOAD_TASKS_FAILURE',
     LOAD_TASKS_STARTED: 'LOAD_TASKS_STARTED',
     LOAD_TASKS_SUCCESS: 'LOAD_TASKS_SUCCESS',
-    TEMP: 'TEMP',
 };
 
 export interface ITasksActions {
     load(): any;
-    temp(): any;
 }
 
 export const tasksActions: ITasksActions = {
@@ -24,17 +22,6 @@ export const tasksActions: ITasksActions = {
                 .then((tasks: Task[]) => {
                     dispatch(loadSuccess(tasks));
                 })
-                .catch((error: Error) => {
-                    dispatch(loadFailure());
-                });
-        };
-    },
-    temp(): any {
-        return (dispatch: Dispatch<any>): void => {
-            dispatch(loadStarted());
-            fetch('/temp')
-                .then((response: Response) => response.text())
-                .then((t) => console.log(t))
                 .catch((error: Error) => {
                     dispatch(loadFailure());
                 });

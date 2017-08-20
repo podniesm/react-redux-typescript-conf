@@ -3,7 +3,6 @@ import Task from './Task';
 
 export interface ITasksActionProps {
     searchTasks: () => void;
-    temp: () => void;
 }
 
 export interface ITasksDataProps {
@@ -13,37 +12,92 @@ export interface ITasksDataProps {
 
 export interface ITasksProps extends ITasksActionProps, ITasksDataProps {}
 
-interface ITasksState {
-    tasks: Task[];
-    isLoading: boolean;
+interface IGridFilter {
+    searchPhrase: string;
+    sortColumn: string;
 }
 
-class Tasks extends React.Component<ITasksProps, Partial<ITasksState>> {
+interface ITasksState {
+    filter: IGridFilter;
+}
+
+class Tasks extends React.Component<ITasksProps, ITasksState> {
     constructor(props: ITasksProps) {
         super(props);
-        this.createTasksGrid = this.createTasksGrid.bind(this);
+        this.state = {
+            filter: {
+                searchPhrase: '',
+                sortColumn: '',
+            },
+        };
+        this.updateTasksFilter = this.updateTasksFilter.bind(this);
     }
 
     public render(): JSX.Element {
-        const grid = this.props.isLoading ? <div>Loading</div> : this.createTasksGrid(this.props.tasks);
+        const tasksGrid = this.createTasksGrid();
         return (
             <div>
                 <h1>Tasks</h1>
                 <br/>
+                <input
+                    name='searchPhrase'
+                    type='search'
+                    onChange={this.updateTasksFilter}
+                    value={this.state.filter.searchPhrase}
+                />
                 <button onClick={this.props.searchTasks}>Search</button>
-                <button onClick={this.props.temp}>Search</button>
-                {grid}
+                {tasksGrid}
+                {this.props.isLoading && <div>Loading...</div>}
             </div>
         );
     }
 
-    private createTasksGrid(tasks: Task[]): JSX.Element[] {
-        return tasks.map((t, index) => (
-            <div key={index}>
-                <div>{t.id}</div>
-                <div>{t.category}</div>
-            </div>
-        ));
+    private updateTasksFilter(event: React.FormEvent<any>): void {
+        const target = event.target as any;
+        const field = target.name;
+        const filter = this.state.filter;
+        filter[field] = target.value;
+        return this.setState({filter});
+    }
+
+    private createTasksGrid(): JSX.Element {
+        return (
+            <table>
+                {this.createTasksGridHeader()}
+                <tbody>
+                {this.createTasksGridRows()}
+                </tbody>
+            </table>
+        );
+    }
+
+    private createTasksGridHeader(): JSX.Element {
+        return (
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Priority</th>
+                <th>Category</th>
+            </tr>
+            </thead>
+        );
+    }
+
+    private createTasksGridRows(): JSX.Element[] {
+        if (this.props.isLoading) {
+            return null;
+        }
+        return (this.props.tasks.map((t, index) => (
+            <tr key={index}>
+                <td>{t.id}</td>
+                <td>{t.status}</td>
+                <td>{t.createdDate}</td>
+                <td>{t.priority}</td>
+                <td>{t.category}</td>
+            </tr>
+        )));
     }
 }
 

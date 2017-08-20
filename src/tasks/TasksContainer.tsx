@@ -14,7 +14,6 @@ function mapStateToProps(state: IStoreState, ownProps: ITasksDataProps): ITasksD
 function mapDispatchToProps(dispatch: Dispatch<number>, ownProps: ITasksDataProps): ITasksActionProps {
     return {
         searchTasks: () => dispatch(tasksActions.load()),
-        temp: () => dispatch(tasksActions.temp()),
     };
 }
 
