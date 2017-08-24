@@ -1,6 +1,7 @@
 import 'isomorphic-fetch';
 import {Dispatch} from 'react-redux';
 import {IAction, IEvent} from '../_core/IAction';
+import HttpClient from '../common/http/HttpClient';
 import Task from './Task';
 
 export const tasksActionTypes = {
@@ -17,8 +18,8 @@ export const tasksActions: ITasksActions = {
     load(): any {
         return (dispatch: Dispatch<any>): void => {
             dispatch(loadStarted());
-            fetch('/items')
-                .then((response: Response) => response.json())
+            const httpClient = new HttpClient();
+            httpClient.getItems()
                 .then((tasks: Task[]) => {
                     dispatch(loadSuccess(tasks));
                 })

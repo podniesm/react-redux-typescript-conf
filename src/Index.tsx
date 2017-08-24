@@ -12,7 +12,6 @@ import {tasksActions} from './tasks/tasksActions';
 import AppContainer from './temp/AppContainer';
 
 const store = configureStore(initialState);
-store.dispatch(tasksActions.load());
 
 ReactDOM.render(
     <Provider store={store}>

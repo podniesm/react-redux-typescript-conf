@@ -13,7 +13,8 @@ const delayTemp = () => new Promise((res, rej) => setTimeout(() => res('tempMOck
 
 function configureFetchMock() {
     fetchMock
-        .get('/items', delayItems)
+        //.get('/items', delayItems)
+        .get('/items', 401)
         // .mock('/temp', delayTemp)
         .catch((unmatchedUrl) => {
             fetchMock.restore();
