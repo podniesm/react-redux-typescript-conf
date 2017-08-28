@@ -29,10 +29,10 @@ class HttpClient {
             .then((response: Response) => {
                 if (response.ok) {
                     const contentType = init.headers.get('Content-Type');
-                    if (contentType !== 'application/text') {
+                    if (contentType.startsWith('text')) {
                         return response.text();
                     }
-                    if (contentType.startsWith('image/') !== 'application/json') {
+                    if (contentType.startsWith('image')) {
                         return response.blob();
                     }
                     return response.json();
