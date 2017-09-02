@@ -1,13 +1,13 @@
 import * as React from 'react';
-import User from './User';
+import Identity from './Identity';
 
 export interface IAuthSectionProps {
     permissions?: string[];
-    user: User;
+    identity: Identity;
 }
 
 const authSection: React.StatelessComponent<IAuthSectionProps> = (props): JSX.Element => {
-    if (!props.user || !props.user.authorize(props.permissions)) {
+    if (!props.identity || !props.identity.authorize(props.permissions)) {
         return null;
     }
     return (<div>{props.children}</div>);

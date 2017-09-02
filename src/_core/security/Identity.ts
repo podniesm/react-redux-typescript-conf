@@ -1,4 +1,4 @@
-class User {
+class Identity {
     private _name: string;
     private _permissions: string[];
 
@@ -35,4 +35,4 @@ class User {
     }
 }
 
-export default User;
+export default Identity;

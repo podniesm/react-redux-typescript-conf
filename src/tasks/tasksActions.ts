@@ -3,6 +3,7 @@ import {Dispatch} from 'react-redux';
 import {IAction, IEvent} from '../_core/IAction';
 import HttpClient from '../common/http/HttpClient';
 import Task from './Task';
+import {IGridFilter} from "./TasksPage";
 
 export const tasksActionTypes = {
     LOAD_TASKS_FAILURE: 'LOAD_TASKS_FAILURE',
@@ -11,15 +12,15 @@ export const tasksActionTypes = {
 };
 
 export interface ITasksActions {
-    load(): any;
+    load(filter: IGridFilter): any;
 }
 
 export const tasksActions: ITasksActions = {
-    load(): any {
+    load(filter: IGridFilter): any {
         return (dispatch: Dispatch<any>): void => {
             dispatch(loadStarted());
             const httpClient = new HttpClient();
-            httpClient.getItems()
+            httpClient.getItems(filter)
                 .then((tasks: Task[]) => {
                     dispatch(loadSuccess(tasks));
                 })

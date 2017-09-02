@@ -4,18 +4,18 @@ import {
     Route,
     RouteProps,
 } from 'react-router-dom';
-import User from './User';
+import Identity from './Identity';
 
 export interface IAuthRouteProps extends RouteProps {
     permissions?: string[];
-    user: User;
+    identity: Identity;
 }
 
 const authRoute: React.StatelessComponent<IAuthRouteProps> = ({component, ...rest}): JSX.Element => {
-    return <Route {...rest} render={(props: RouteProps) => renderAuth(props, rest.user, rest.permissions, component)}/>;
+    return <Route {...rest} render={(props: RouteProps) => renderAuth(props, rest.identity, rest.permissions, component)}/>;
 };
 
-function renderAuth(props: RouteProps, user: User, permissions: string[], component: any): JSX.Element {
+function renderAuth(props: RouteProps, user: Identity, permissions: string[], component: any): JSX.Element {
     if (!user) {
         return <Redirect to={{pathname: '/login', state: { from: props.location }}}/>;
     }

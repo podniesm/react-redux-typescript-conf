@@ -1,7 +1,7 @@
 import * as chai from 'chai';
-import User from '../../../src/_core/security/User';
+import User from '../../../src/_core/security/Identity';
 
-describe('Given User', () => {
+describe('Given Identity', () => {
     describe('with name', () => {
         describe('When get name', () => {
             it('Then correct name returned', () => {

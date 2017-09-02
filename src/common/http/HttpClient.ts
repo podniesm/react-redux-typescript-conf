@@ -2,6 +2,7 @@ import {Promise} from 'es6-promise';
 import Task from '../../tasks/Task';
 import fetchRequestInitBuilderFactory, {IFetchRequestInitBuilder} from './FetchRequestInitBuilder';
 import headerBuilderFactory, {IHeadersBuilder} from './HeadersBuilder';
+import {IGridFilter} from "../../tasks/TasksPage";
 
 class HttpClient {
     private _headersBuilder: IHeadersBuilder;
@@ -11,7 +12,7 @@ class HttpClient {
         this._fetchRequestInitBuilder = fetchRequestInitBuilderFactory();
     }
 
-    public getItems(): Promise<Task[]> {
+    public getItems(filter: IGridFilter): Promise<Task[]> {
         const headers = this._headersBuilder
             .start()
             .addContentType('application/json')
@@ -21,10 +22,14 @@ class HttpClient {
             .setMethod('get')
             .setHeaders(headers)
             .materialize();
-        return this.makeRequest<Task[]>('/items', init);
+        // TODO(MP): creating query string optimization
+        const fakeUrl = new URL('http://a');
+        Object.keys(filter).forEach(key => fakeUrl.searchParams.append(key, filter[key]));
+        const url = '/items' + fakeUrl.search;
+        return this.request<Task[]>(url, init);
     }
 
-    private makeRequest<TReturn>(url: string, init?: RequestInit): Promise<TReturn> {
+    private request<TReturn>(url: string, init?: RequestInit): Promise<TReturn> {
         return fetch(url, init)
             .then((response: Response) => {
                 if (response.ok) {
@@ -41,6 +46,9 @@ class HttpClient {
                     window.location.href = '/login';
                 }
                 return Promise.reject(response.status);
+            })
+            .catch(error => {
+                return Promise.reject(error);
             });
     }
 }

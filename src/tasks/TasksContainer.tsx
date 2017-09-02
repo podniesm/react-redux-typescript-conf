@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import IStoreState from '../store/IStoreState';
-import {default as Tasks, ITasksActionProps, ITasksDataProps} from './Tasks';
+import {default as Tasks, ITasksPageActionProps, ITasksDataProps, IGridFilter} from './TasksPage';
 import {tasksActions} from './tasksActions';
 
 function mapStateToProps(state: IStoreState, ownProps: ITasksDataProps): ITasksDataProps {
@@ -11,9 +11,9 @@ function mapStateToProps(state: IStoreState, ownProps: ITasksDataProps): ITasksD
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<number>, ownProps: ITasksDataProps): ITasksActionProps {
+function mapDispatchToProps(dispatch: Dispatch<number>, ownProps: ITasksDataProps): ITasksPageActionProps {
     return {
-        searchTasks: () => dispatch(tasksActions.load()),
+        searchTasks: (filter: IGridFilter) => dispatch(tasksActions.load(filter)),
     };
 }
 

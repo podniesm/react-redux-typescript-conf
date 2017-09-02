@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import AuthRoute from '../../_core/security/AuthRoute';
 import AuthSection from '../../_core/security/AuthSection';
-import User from '../../_core/security/User';
+import Identity from '../../_core/security/Identity';
 import TasksContainer from '../../tasks/TasksContainer';
 import IMenuItemData from '../menu/IMenuItemData';
 import Menu from '../menu/Menu';
@@ -18,17 +18,17 @@ const menuItemsData: IMenuItemData[] = [
     {name: 'INFO', path: 'info'},
 ];
 
-const user = new User('Michal', ['one', 'two']);
+const identity = new Identity('Michal', ['one', 'two']);
 
 class Main extends React.Component<any, any> {
     public render(): JSX.Element {
         return (
             <Router>
                 <div>
-                    <AuthSection permissions={['one', 'two']} user={user}>
+                    <AuthSection permissions={['one', 'two']} identity={identity}>
                         <div>ACCESS</div>
                     </AuthSection>
-                    <AuthSection permissions={['one', 'two', 'tt']} user={user}>
+                    <AuthSection permissions={['one', 'two', 'tt']} identity={identity}>
                         <div>DENY</div>
                     </AuthSection>
                     <Menu title='AZA BOK'>
@@ -38,19 +38,19 @@ class Main extends React.Component<any, any> {
                     <AuthRoute
                         path='/dashboard'
                         component={() => <div>dashboard!</div>}
-                        user={user}
+                        identity={identity}
                         permissions={['one1']}
                     />
                     <AuthRoute
                         path='/zadania'
                         component={TasksContainer}
-                        user={user}
+                        identity={identity}
                         permissions={['one']}
                     />
                     <AuthRoute
                         path='/info'
                         component={() => <div>info!</div>}
-                        user={user}
+                        identity={identity}
                         permissions={['two']}
                     />
                 </div>
