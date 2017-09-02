@@ -8,6 +8,7 @@ export interface ITasksPageActionProps {
 export interface ITasksDataProps {
     tasks: Task[];
     isLoading: boolean;
+    allTasksCount: number;
 }
 
 export interface ITasksProps extends ITasksPageActionProps, ITasksDataProps {}
@@ -17,6 +18,7 @@ export interface IGridFilter {
     sortColumn: string;
     sortDirection: string;
     itemsCount: number;
+    currentPage: number;
 }
 
 interface ITasksPageState {
@@ -31,7 +33,8 @@ class TasksPage extends React.Component<ITasksProps, ITasksPageState> {
                 searchPhrase: '',
                 sortColumn: '',
                 sortDirection: '',
-                itemsCount: 0,
+                itemsCount: 5,
+                currentPage: 1,
             },
         };
         this.updateTasksFilterAndSearch = this.updateTasksFilterAndSearch.bind(this);
@@ -40,6 +43,7 @@ class TasksPage extends React.Component<ITasksProps, ITasksPageState> {
         this.searchTasks = this.searchTasks.bind(this);
         this.createSorting = this.createSorting.bind(this);
         this.sort = this.sort.bind(this);
+        this.changePage = this.changePage.bind(this);
     }
 
     public render(): JSX.Element {
@@ -54,6 +58,9 @@ class TasksPage extends React.Component<ITasksProps, ITasksPageState> {
         );
     }
 
+    public componentDidMount(): void {
+        this.searchTasks();
+    }
 
     private createTasksGrid(): JSX.Element {
         return (
@@ -81,6 +88,9 @@ class TasksPage extends React.Component<ITasksProps, ITasksPageState> {
                     {this.createTasksGridRows()}
                     </tbody>
                 </table>
+                <span>Showing {1} to {this.state.filter.itemsCount} of {this.props.allTasksCount}</span>
+                <br/>
+                {this.createPagination()}
             </div>
         );
     }
@@ -144,6 +154,12 @@ class TasksPage extends React.Component<ITasksProps, ITasksPageState> {
         this.setState({filter}, this.searchTasks);
     }
 
+    private changePage(pageNumber: number) {
+        const filter = this.state.filter;
+        filter.currentPage = pageNumber;
+        this.setState({filter}, this.searchTasks);
+    }
+
     private updateTasksFilterAndSearch(event: React.SyntheticEvent<any>): void {
         this.setState({filter: this.createFilter(event)}, this.searchTasks);
     }
@@ -167,6 +183,21 @@ class TasksPage extends React.Component<ITasksProps, ITasksPageState> {
         const filter = this.state.filter;
         filter[field] = target.value;
         return filter;
+    }
+
+    private createPagination(): JSX.Element[] {
+        const pagesCount = Math.ceil(this.props.allTasksCount / this.state.filter.itemsCount);
+        const result: JSX.Element[] = [];
+        const activeStyle = {
+            backgroundColor: 'blue',
+        };
+        const notActiveStyle = {
+            backgroundColor: 'white',
+        };
+        for (let i = 1; i <= pagesCount; i++) {
+            result.push(<span onClick={() => this.changePage(i)} key={i} style={this.state.filter.currentPage === i ? activeStyle : notActiveStyle}>{i}</span>);
+        }
+        return result;
     }
 }
 

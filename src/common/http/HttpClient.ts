@@ -1,8 +1,8 @@
 import {Promise} from 'es6-promise';
-import Task from '../../tasks/Task';
+import {IGridFilter} from '../../tasks/TasksPage';
+import TasksResponse from '../../tasks/TasksResponse';
 import fetchRequestInitBuilderFactory, {IFetchRequestInitBuilder} from './FetchRequestInitBuilder';
 import headerBuilderFactory, {IHeadersBuilder} from './HeadersBuilder';
-import {IGridFilter} from "../../tasks/TasksPage";
 
 class HttpClient {
     private _headersBuilder: IHeadersBuilder;
@@ -12,7 +12,7 @@ class HttpClient {
         this._fetchRequestInitBuilder = fetchRequestInitBuilderFactory();
     }
 
-    public getItems(filter: IGridFilter): Promise<Task[]> {
+    public getItems(filter: IGridFilter): Promise<TasksResponse> {
         const headers = this._headersBuilder
             .start()
             .addContentType('application/json')
@@ -24,9 +24,9 @@ class HttpClient {
             .materialize();
         // TODO(MP): creating query string optimization
         const fakeUrl = new URL('http://a');
-        Object.keys(filter).forEach(key => fakeUrl.searchParams.append(key, filter[key]));
+        Object.keys(filter).forEach((key) => fakeUrl.searchParams.append(key, filter[key]));
         const url = '/items' + fakeUrl.search;
-        return this.request<Task[]>(url, init);
+        return this.request<TasksResponse>(url, init);
     }
 
     private request<TReturn>(url: string, init?: RequestInit): Promise<TReturn> {
@@ -47,7 +47,7 @@ class HttpClient {
                 }
                 return Promise.reject(response.status);
             })
-            .catch(error => {
+            .catch((error) => {
                 return Promise.reject(error);
             });
     }

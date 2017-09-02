@@ -4,6 +4,7 @@ import {IAction, IEvent} from '../_core/IAction';
 import HttpClient from '../common/http/HttpClient';
 import Task from './Task';
 import {IGridFilter} from "./TasksPage";
+import TasksResponse from "./TasksResponse";
 
 export const tasksActionTypes = {
     LOAD_TASKS_FAILURE: 'LOAD_TASKS_FAILURE',
@@ -21,7 +22,7 @@ export const tasksActions: ITasksActions = {
             dispatch(loadStarted());
             const httpClient = new HttpClient();
             httpClient.getItems(filter)
-                .then((tasks: Task[]) => {
+                .then((tasks: TasksResponse) => {
                     dispatch(loadSuccess(tasks));
                 })
                 .catch((error: Error) => {
@@ -37,7 +38,7 @@ function loadStarted(): IEvent {
     };
 }
 
-function loadSuccess(tasks: Task[]): IAction<Task[]> {
+function loadSuccess(tasks: TasksResponse): IAction<TasksResponse> {
     return {
         payload: tasks,
         type: tasksActionTypes.LOAD_TASKS_SUCCESS,

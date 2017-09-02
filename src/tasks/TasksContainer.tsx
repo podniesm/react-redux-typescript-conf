@@ -1,11 +1,12 @@
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import IStoreState from '../store/IStoreState';
-import {default as Tasks, ITasksPageActionProps, ITasksDataProps, IGridFilter} from './TasksPage';
 import {tasksActions} from './tasksActions';
+import {default as Tasks, IGridFilter, ITasksDataProps, ITasksPageActionProps} from './TasksPage';
 
 function mapStateToProps(state: IStoreState, ownProps: ITasksDataProps): ITasksDataProps {
     return {
+        allTasksCount: state.tasks.allItemsCount,
         isLoading: state.tasks.isLoading,
         tasks: state.tasks.items,
     };

@@ -5,6 +5,7 @@ const initialState: IStoreState = {
     tasks: {
         isLoading: false,
         items: [],
+        allItemsCount: 0,
     },
 };
 
