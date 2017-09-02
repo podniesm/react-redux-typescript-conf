@@ -15,6 +15,7 @@ export interface ITasksProps extends ITasksPageActionProps, ITasksDataProps {}
 export interface IGridFilter {
     searchPhrase: string;
     sortColumn: string;
+    sortDirection: string;
     itemsCount: number;
 }
 
@@ -29,6 +30,7 @@ class TasksPage extends React.Component<ITasksProps, ITasksPageState> {
             filter: {
                 searchPhrase: '',
                 sortColumn: '',
+                sortDirection: '',
                 itemsCount: 0,
             },
         };
@@ -36,6 +38,8 @@ class TasksPage extends React.Component<ITasksProps, ITasksPageState> {
         this.updateTasksFilter = this.updateTasksFilter.bind(this);
         this.searchClickHandler = this.searchClickHandler.bind(this);
         this.searchTasks = this.searchTasks.bind(this);
+        this.createSorting = this.createSorting.bind(this);
+        this.sort = this.sort.bind(this);
     }
 
     public render(): JSX.Element {
@@ -84,15 +88,29 @@ class TasksPage extends React.Component<ITasksProps, ITasksPageState> {
     private createTasksGridHeader(): JSX.Element {
         return (
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th>Priority</th>
-                <th>Category</th>
-            </tr>
+                <tr>
+                    <th onClick={() => this.sort('id')}>ID {this.createSorting('id')}</th>
+                    <th onClick={() => this.sort('status')}>Status {this.createSorting('status')}</th>
+                    <th onClick={() => this.sort('created')}>Created {this.createSorting('created')}</th>
+                    <th onClick={() => this.sort('priority')}>Priority {this.createSorting('priority')}</th>
+                    <th onClick={() => this.sort('category')}>Category {this.createSorting('category')}</th>
+                </tr>
             </thead>
         );
+    }
+
+    private createSorting(column: string): JSX.Element {
+        if(column === this.state.filter.sortColumn) {
+            switch (this.state.filter.sortDirection) {
+                case 'asc':
+                    return (<span>ASC</span>);
+                case 'desc':
+                    return (<span>DESC</span>);
+                default:
+                    return (<span>ASC</span>);
+            }
+        }
+        return null;
     }
 
     private createTasksGridRows(): JSX.Element[] {
@@ -108,6 +126,22 @@ class TasksPage extends React.Component<ITasksProps, ITasksPageState> {
                 <td>{t.category}</td>
             </tr>
         )));
+    }
+
+    private sort(column: string): void {
+        const filter = this.state.filter;
+        let sortDirection = 'asc';
+        if(filter.sortColumn === column) {
+            if(filter.sortDirection === 'asc') {
+                sortDirection = 'desc';
+            }
+            else {
+                sortDirection = 'asc';
+            }
+        }
+        filter.sortColumn = column;
+        filter.sortDirection = sortDirection;
+        this.setState({filter}, this.searchTasks);
     }
 
     private updateTasksFilterAndSearch(event: React.SyntheticEvent<any>): void {
