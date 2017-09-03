@@ -1,5 +1,5 @@
 import {Promise} from 'es6-promise';
-import {IGridFilter} from '../../tasks/TasksPage';
+import {IGridFilter} from '../../tasks/TasksGrid';
 import TasksResponse from '../../tasks/TasksResponse';
 import fetchRequestInitBuilderFactory, {IFetchRequestInitBuilder} from './FetchRequestInitBuilder';
 import headerBuilderFactory, {IHeadersBuilder} from './HeadersBuilder';

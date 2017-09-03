@@ -2,7 +2,8 @@ import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import IStoreState from '../store/IStoreState';
 import {tasksActions} from './tasksActions';
-import {default as Tasks, IGridFilter, ITasksDataProps, ITasksPageActionProps} from './TasksPage';
+import {IGridFilter} from './TasksGrid';
+import {default as Tasks, ITasksDataProps, ITasksPageActionProps} from './TasksPage';
 
 function mapStateToProps(state: IStoreState, ownProps: ITasksDataProps): ITasksDataProps {
     return {

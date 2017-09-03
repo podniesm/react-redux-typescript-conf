@@ -10,7 +10,7 @@ import * as fetchMock from 'fetch-mock';
 import 'isomorphic-fetch';
 import * as _ from 'lodash';
 import Task from '../tasks/Task';
-import TasksResponse from "../tasks/TasksResponse";
+import TasksResponse from '../tasks/TasksResponse';
 
 const allTasks = [
     new Task('a', 'active', 'high', 'bug'),
@@ -39,7 +39,7 @@ const delayItems = (path: string, req: RequestInit) => {
     const sortColumn = filter.get('sortColumn');
     let sortDirection = filter.get('sortDirection');
     const currentPage = +filter.get('currentPage');
-    const itemsCount = +filter.get('itemsCount');
+    const itemsPerPage = +filter.get('itemsPerPage');
     return new Promise((res, rej) => {
         let resultTasks: Task[] = allTasks;
         if (searchPhrase) {
@@ -55,8 +55,8 @@ const delayItems = (path: string, req: RequestInit) => {
             }
         }
         const allItemsCount = resultTasks.length;
-        const startIndex = (currentPage - 1) * itemsCount;
-        const endIndex = currentPage * itemsCount;
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = currentPage * itemsPerPage;
         resultTasks = resultTasks.slice(startIndex, endIndex);
         const result: TasksResponse = {
             allTasksCount: allItemsCount,

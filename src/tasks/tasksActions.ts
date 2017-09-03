@@ -3,8 +3,8 @@ import {Dispatch} from 'react-redux';
 import {IAction, IEvent} from '../_core/IAction';
 import HttpClient from '../common/http/HttpClient';
 import Task from './Task';
-import {IGridFilter} from "./TasksPage";
-import TasksResponse from "./TasksResponse";
+import {IGridFilter} from './TasksGrid';
+import TasksResponse from './TasksResponse';
 
 export const tasksActionTypes = {
     LOAD_TASKS_FAILURE: 'LOAD_TASKS_FAILURE',
